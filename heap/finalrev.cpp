@@ -143,7 +143,7 @@ int size = 15;
 
 heapify(arr, size);
 
-cout << "After heapify\n";
+cout << "After heapify effect\n";
 
 printer(size, arr);
 
