@@ -75,18 +75,18 @@ int largest = parent;
 
 void setter(int starting, int *arr, int size)
 {
-    while (starting < size)
+    while (true)
     {
         int leftchild = starting * 2;
         int rightchild = starting * 2 + 1;
 int largest = starting;
-        if (leftchild < size && arr[leftchild] > arr[largest])
+        if (leftchild <= size && arr[leftchild] > arr[largest])
         {
             
             largest = leftchild;
         }
 
-        if(rightchild<size && arr[rightchild] > arr[largest]){
+        if(rightchild<=size && arr[rightchild] > arr[largest]){
             
         largest = rightchild;
         }
@@ -101,21 +101,29 @@ int largest = starting;
     }
 }
 
-void heapify(int* arr, int size)
+void heapify(int* arr, int &size)
 {
-for(int i=size;i>=1;i++){
+for(int i=size;i>=1;i--){
     arr[i] = arr[i-1];
 }
 arr[0] = -1;
 
-
     int starting = size / 2;
-    while (starting > 0)
-    {
-        setter(starting, arr, size+1);
-        starting--;
-    }
+   while (starting > 0)
+{
+    
+    setter(starting, arr, size);
+starting --;
 }
+}
+
+void printer(int size,int *arr)
+    {
+        for (int i = 1; i <= size; i++)
+        {
+            cout << arr[i] << ' ';
+        }
+    }
 
 int main()
 {
@@ -128,9 +136,17 @@ int main()
     h.maker(60);
 
     h.printer();
+cout<<endl;
+    int arr[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+int size = 15;
+  cout << "\nBefore heapify\n";
 
-    int arr[15] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+heapify(arr, size);
 
-    heapify(arr, 15);
+cout << "After heapify\n";
+
+printer(size, arr);
+
+
     return 0;
 }
