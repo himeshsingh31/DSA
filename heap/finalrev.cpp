@@ -38,34 +38,84 @@ public:
         // for max heap
         swap(arr[1], arr[size]);
         size -= 1;
-        int largest = 1;
-        while (largest < size)
+        int parent= 1;
+        while (parent < size)
         {
-      
-            int child = largest*2;
-      int rightchild =(largest *2) +1;
-            if (child<= size && arr[largest] < arr[child] )
-            {swap(arr[largest],arr[child]);
+int largest = parent;
+            int child = parent* 2;
+            int rightchild = (parent * 2) + 1;
+            if (child <= size && arr[largest] < arr[child])
+            {
                 largest = child;
-
             }
-            if (rightchild<= size &&  arr[largest] < arr[rightchild] )
-            {swap(arr[largest], arr[rightchild]);
-                largest = child + 1;
+            if (rightchild <= size && arr[largest] < arr[rightchild])
+            {
+                largest = rightchild;
             }
 
+            if(largest==parent)
+            break;
+
+
+            swap(arr[largest],arr[parent]);
+            parent = largest;
         }
 
         return;
-        
     }
 
-    void printer(){
-      for(int i =1;i<=size;i++){
-        cout<<arr[i]<<' ';
-      }
+    void printer()
+    {
+        for (int i = 1; i <= size; i++)
+        {
+            cout << arr[i] << ' ';
+        }
     }
 };
+
+void setter(int starting, int *arr, int size)
+{
+    while (starting < size)
+    {
+        int leftchild = starting * 2;
+        int rightchild = starting * 2 + 1;
+int largest = starting;
+        if (leftchild < size && arr[leftchild] > arr[largest])
+        {
+            
+            largest = leftchild;
+        }
+
+        if(rightchild<size && arr[rightchild] > arr[largest]){
+            
+        largest = rightchild;
+        }
+        
+        if(largest==starting)
+        break;
+
+
+        swap(arr[largest],arr[starting]);
+        starting = largest;
+
+    }
+}
+
+void heapify(int* arr, int size)
+{
+for(int i=size;i>=1;i++){
+    arr[i] = arr[i-1];
+}
+arr[0] = -1;
+
+
+    int starting = size / 2;
+    while (starting > 0)
+    {
+        setter(starting, arr, size+1);
+        starting--;
+    }
+}
 
 int main()
 {
@@ -79,5 +129,8 @@ int main()
 
     h.printer();
 
+    int arr[15] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+
+    heapify(arr, 15);
     return 0;
 }
