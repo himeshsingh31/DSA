@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <iostream>
-
+#include <algorithm>
 using namespace std;
 
 class heap
@@ -38,11 +38,11 @@ public:
         // for max heap
         swap(arr[1], arr[size]);
         size -= 1;
-        int parent= 1;
+        int parent = 1;
         while (parent < size)
         {
-int largest = parent;
-            int child = parent* 2;
+            int largest = parent;
+            int child = parent * 2;
             int rightchild = (parent * 2) + 1;
             if (child <= size && arr[largest] < arr[child])
             {
@@ -53,11 +53,10 @@ int largest = parent;
                 largest = rightchild;
             }
 
-            if(largest==parent)
-            break;
+            if (largest == parent)
+                break;
 
-
-            swap(arr[largest],arr[parent]);
+            swap(arr[largest], arr[parent]);
             parent = largest;
         }
 
@@ -79,51 +78,67 @@ void setter(int starting, int *arr, int size)
     {
         int leftchild = starting * 2;
         int rightchild = starting * 2 + 1;
-int largest = starting;
+        int largest = starting;
         if (leftchild <= size && arr[leftchild] > arr[largest])
         {
-            
+
             largest = leftchild;
         }
 
-        if(rightchild<=size && arr[rightchild] > arr[largest]){
-            
-        largest = rightchild;
+        if (rightchild <= size && arr[rightchild] > arr[largest])
+        {
+
+            largest = rightchild;
         }
-        
-        if(largest==starting)
-        break;
 
+        if (largest == starting)
+            break;
 
-        swap(arr[largest],arr[starting]);
+        swap(arr[largest], arr[starting]);
         starting = largest;
-
     }
 }
 
-void heapify(int* arr, int &size)
+void heapify(int *arr, int &size)
 {
-for(int i=size;i>=1;i--){
-    arr[i] = arr[i-1];
-}
-arr[0] = -1;
+    for (int i = size; i >= 1; i--)
+    {
+        arr[i] = arr[i - 1];
+    }
+    arr[0] = -1;
 
     int starting = size / 2;
-   while (starting > 0)
-{
-    
-    setter(starting, arr, size);
-starting --;
-}
+    while (starting > 0)
+    {
+
+        setter(starting, arr, size);
+        starting--;
+    }
 }
 
-void printer(int size,int *arr)
+void printer(int size, int *arr)
+{
+    for (int i = 1; i <= size; i++)
     {
-        for (int i = 1; i <= size; i++)
-        {
-            cout << arr[i] << ' ';
-        }
+        cout << arr[i] << ' ';
     }
+}
+
+void heapsort(int *arr2, int size)
+{int orgsize = size;
+    while (size > 1)
+    {
+    setter(1,arr2,size);
+    
+    swap(arr2[1],arr2[size]);
+    size = size-1;
+    }
+for (int i = 1; i <= orgsize; i++)
+    {
+        cout << arr2[i] << ' ';
+    }
+
+}
 
 int main()
 {
@@ -136,17 +151,15 @@ int main()
     h.maker(60);
 
     h.printer();
-cout<<endl;
-    int arr[16] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-int size = 15;
-  cout << "\nBefore heapify\n";
+    cout << endl;
+    int arr[6] = {5,4,3,2,6};
+    int size = 5;
+    heapify(arr, size);
+    printer(size, arr);
+    cout << endl;
 
-heapify(arr, size);
-
-cout << "After heapify effect\n";
-
-printer(size, arr);
-
+    cout << "after heap sort >>" << endl;
+    heapsort(arr, 5);
 
     return 0;
 }
