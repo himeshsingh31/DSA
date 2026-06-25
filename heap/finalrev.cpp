@@ -3,6 +3,7 @@
 #include <algorithm>
 using namespace std;
 // spotify or heapify
+//just like the shopify
 class heap
 {
 public:
