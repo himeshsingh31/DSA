@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-
+// spotify or heapify
 class heap
 {
 public:
