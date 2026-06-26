@@ -18,7 +18,7 @@ public:
     }
 };
 
-void inserter(trie *root, string xyz)
+void insertr(trie *root, string xyz)
 {
     int x = 0;
     while (x < xyz.length())
@@ -36,11 +36,38 @@ void inserter(trie *root, string xyz)
     }
     root->status = true;
 
-};
+}
 
+void searcher(string x,trie* root){
+int index = 0;
+
+while(index<x.size()){
+    int c = x[index] - 'a';
+if(root->chars[c]==NULL){
+cout<<"the element is not present"<<endl;
+    break;
+}
+else{
+    root = root->chars[c];
+    index++;
+}
+}
+if(index==x.size() && root->status == true)
+{
+    cout<<"the element is present"<<endl;
+}
+
+
+
+}
 int main()
 {
-    trie *root = new trie();
-    inserter(root, "hello");
-    inserter(root, "hell");
+    trie *root2 = new trie();
+    trie* root = root2;
+    insertr(root, "hello"); 
+    insertr(root, "hell");
+    insertr(root,"horse");
+
+    searcher("horse",root2);
+//     seracher(hell);
 }
