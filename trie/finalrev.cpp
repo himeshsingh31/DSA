@@ -25,7 +25,7 @@ void insertr(trie *root, string xyz)
     {
         char c = xyz[x];
         int locator = c - 'a';
-   
+
         if (root->chars[locator] == NULL)
         {
             root->chars[locator] = new trie();
@@ -35,39 +35,64 @@ void insertr(trie *root, string xyz)
         x++;
     }
     root->status = true;
-
 }
 
-void searcher(string x,trie* root){
-int index = 0;
-
-while(index<x.size()){
-    int c = x[index] - 'a';
-if(root->chars[c]==NULL){
-cout<<"the element is not present"<<endl;
-    break;
-}
-else{
-    root = root->chars[c];
-    index++;
-}
-}
-if(index==x.size() && root->status == true)
+bool searcher(string x, trie *root)
 {
-    cout<<"the element is present"<<endl;
+    int index = 0;
+
+    while (index < x.size())
+    {
+        int c = x[index] - 'a';
+        if (root->chars[c] == NULL)
+        {
+            
+            return false;
+        }
+        else
+        {
+            root = root->chars[c];
+            index++;
+        }
+    }
+    if (index == x.size() && root->status == true)
+    {
+        cout << "the element is present" << endl;
+        return true;
+    }
+    else{
+
+        cout<<"the element is not present"<<endl;
+    }
+    return false;
 }
 
+
+
+void removr(trie* root,string x){
+
+    if(searcher(x,root)==true){
+int index =0;
+        while(index<x.size()){
+            int c = x[index]-'a';
+            root= root->chars[c];
+            index++;
+        }
+
+        root->status = false;
+    }
 
 
 }
 int main()
 {
     trie *root2 = new trie();
-    trie* root = root2;
-    insertr(root, "hello"); 
+    trie *root = root2;
+    insertr(root, "hello");
     insertr(root, "hell");
-    insertr(root,"horse");
+    insertr(root, "horse");
 
-    searcher("horse",root2);
-//     seracher(hell);
+    searcher("horse", root);
+    removr(root,"horse");
+    searcher("horse", root);
 }
