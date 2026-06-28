@@ -98,6 +98,6 @@ int main()
     insertr(root, "horse");
 
     searcher("cars", root);
-    removr(root, "cars");
+    removr(root, "hello");
     searcher("cars", root);
 }
