@@ -46,7 +46,7 @@ bool searcher(string x, trie *root)
         int c = x[index] - 'a';
         if (root->chars[c] == NULL)
         {
-
+cout<<"the element is not present !"<<endl;
             return false;
         }
         else
@@ -60,11 +60,7 @@ bool searcher(string x, trie *root)
         cout << "the element is present" << endl;
         return true;
     }
-    else
-    {
-
-        cout << "the element is not present" << endl;
-    }
+   
     return false;
 }
 
@@ -97,7 +93,7 @@ int main()
     insertr(root, "hell");
     insertr(root, "horse");
 
-    searcher("helo", root);
+    searcher("gta", root);
     removr(root, "hello");
-    searcher("hello", root);
+    searcher("gta", root);
 }
