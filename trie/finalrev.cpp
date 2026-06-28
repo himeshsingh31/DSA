@@ -97,7 +97,7 @@ int main()
     insertr(root, "hell");
     insertr(root, "horse");
 
-    searcher("hors", root);
-    removr(root, "horse");
-    searcher("hors", root);
+    searcher("cars", root);
+    removr(root, "cars");
+    searcher("cars", root);
 }
