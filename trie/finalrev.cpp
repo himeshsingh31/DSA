@@ -46,7 +46,7 @@ bool searcher(string x, trie *root)
         int c = x[index] - 'a';
         if (root->chars[c] == NULL)
         {
-            
+
             return false;
         }
         else
@@ -60,30 +60,35 @@ bool searcher(string x, trie *root)
         cout << "the element is present" << endl;
         return true;
     }
-    else{
+    else
+    {
 
-        cout<<"the element is not present"<<endl;
+        cout << "the element is not present" << endl;
     }
     return false;
 }
 
+void removr(trie *root, string x)
+{
 
-
-void removr(trie* root,string x){
-
-    if(searcher(x,root)==true){
-int index =0;
-        while(index<x.size()){
-            int c = x[index]-'a';
-            root= root->chars[c];
+    if (searcher(x, root) == true)
+    {
+        int index = 0;
+        while (index < x.size())
+        {
+            int c = x[index] - 'a';
+            root = root->chars[c];
             index++;
         }
 
         root->status = false;
     }
-
-
+    else{
+        cout<<"the word is already not exist !"<<endl;
+    }
 }
+
+
 int main()
 {
     trie *root2 = new trie();
@@ -93,6 +98,6 @@ int main()
     insertr(root, "horse");
 
     searcher("horse", root);
-    removr(root,"horse");
+    removr(root, "horse");
     searcher("horse", root);
 }
