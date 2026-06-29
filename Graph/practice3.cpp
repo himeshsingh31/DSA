@@ -53,3 +53,4 @@ p.creatr(a,b,0);
 
     p.printer();
 }
+//17:44
