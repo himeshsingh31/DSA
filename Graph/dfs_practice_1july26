@@ -1,0 +1,70 @@
+/*
+Problem: Depth First Search (DFS)
+Platform: Coding Ninjas / CodeStudio
+Approach:
+1. Create an adjacency list.
+2. Traverse every vertex.
+3. If a vertex is unvisited, perform DFS.
+4. Store each connected component in a separate vector.
+
+Time Complexity: O(V + E)
+Space Complexity: O(V + E)
+*/
+
+
+#include <iostream>
+#include <vector>
+#include <list>
+#include <unordered_map>
+
+using namespace std;
+
+// DFS Helper Function
+void dfs(unordered_map<int, bool> &visited,
+         vector<int> &ans,
+         unordered_map<int, list<int>> &adj,
+         int node)
+{
+    visited[node] = true;
+    ans.push_back(node);
+
+    for (auto neighbour : adj[node])
+    {
+        if (!visited[neighbour])
+        {
+            dfs(visited, ans, adj, neighbour);
+        }
+    }
+}
+
+// DFS Traversal
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
+    unordered_map<int, bool> visited;
+    vector<vector<int>> ans2;
+    unordered_map<int, list<int>> adj;
+
+    // Create Adjacency List
+    for (int i = 0; i < E; i++)
+    {
+        int u = edges[i][0];
+        int v = edges[i][1];
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    // Traverse all Connected Components
+    for (int i = 0; i < V; i++)
+    {
+        vector<int> ans;
+
+        if (!visited[i])
+        {
+            dfs(visited, ans, adj, i);
+            ans2.push_back(ans);
+        }
+    }
+
+    return ans2;
+}
