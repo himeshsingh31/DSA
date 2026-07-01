@@ -1,0 +1,102 @@
+https://www.naukri.com/code360/problems/cycle-detection-in-undirected-graph_1062670?topList=love-babbar-dsa-sheet-problems&leftPanelTab=0&leftPanelTabValue=SUBMISSION
+
+/*
+-----------------------------------------------
+Problem: Cycle Detection in an Undirected Graph
+Platform: Coding Ninjas (CodeStudio)
+
+Approach:
+1. Create an adjacency list from the given edge list.
+2. Traverse every connected component using BFS.
+3. Maintain a parent map to distinguish a back edge
+   from the edge leading to the parent.
+4. If a visited neighbour is found that is not the
+   parent of the current node, a cycle exists.
+5. If any connected component contains a cycle,
+   return "Yes"; otherwise return "No".
+
+Algorithm:
+- Build Adjacency List
+- BFS Traversal
+- Parent Tracking
+- Cycle Detection
+
+Time Complexity: O(V + E)
+Space Complexity: O(V + E)
+
+Concepts Used:
+- Graph
+- Breadth First Search (BFS)
+- Adjacency List
+- Queue
+- Hash Map
+-----------------------------------------------
+*/
+
+
+
+
+
+#include<unordered_map>
+#include<list>
+#include<string>
+#include<queue>
+bool bfs(int noder,unordered_map<int,bool>&visited,unordered_map<int,list<int>>&edges){
+
+queue<int> q;
+q.push(noder);
+visited[noder] =true;
+unordered_map<int,int>parent;
+parent[noder]=-1;
+while(!q.empty()){
+int x = q.front();
+q.pop();
+visited[x]=1;
+for(auto i:edges[x]){
+    if(visited[i] && parent[x]!=i){
+        return true;
+    }
+    else if(!visited[i]){
+        q.push(i);
+        visited[i]=1;
+        parent[i] = x;
+    }
+}
+
+}
+return false;
+
+
+}
+
+
+
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+unordered_map<int,bool>visited;
+    unordered_map<int, list<int>> adj;
+
+    // Create Adjacency List
+    for (int i = 0; i < m; i++)
+    {
+        int u = edges[i][0];
+        int v = edges[i][1];
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+for(int i =0;i<n;i++){
+if(!visited[i]){
+   bool L = bfs(i,visited,adj);
+ if(L==true){
+     return "Yes";
+ }
+}
+
+}
+
+
+
+return "No";
+}
