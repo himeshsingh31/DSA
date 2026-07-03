@@ -7,11 +7,8 @@
 //     if(!visited[p]){
 //         dfs(visited,p,ans,adj);
 //     }
-
 // }
-
 // }
-
 
 
 // vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
@@ -39,4 +36,5 @@
 //     }
 // }
 // return ans2;
+
 // }
