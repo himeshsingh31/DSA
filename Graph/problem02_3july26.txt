@@ -5,7 +5,9 @@
 bool dfs(int n,unordered_map<int,list<int>>&adj,unordered_map<int,int>&parent,unordered_map<int,bool>&visited){
 
 queue<int> q;
-
+visite[n]=1;
+q.push(n)
+parent[n]=-1;
 
 while(!q.empty()){
 int x = q.front();
@@ -13,7 +15,7 @@ q.pop();
 
 for(auto i:adj[x]){
 
-if(visited[i]==1 && parent[i]!=x){
+if(visited[i]==1 && parent[x]!=i){
     return true;
 }
 else if(visited[i]==0){
