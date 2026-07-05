@@ -1,0 +1,228 @@
+/// cycle detection in directed graph by depth first search...
+
+https://www.naukri.com/code360/problems/detect-cycle-in-a-directed-graph_1062626?leftPanelTab=0&leftPanelTabValue=SUBMISSION
+
+
+
+#include<unordered_map>
+#include<list>
+#include<string>
+#include<queue>
+
+bool dfscycle(int node,unordered_map<int,bool>&visited,unordered_map<int,bool>&dfstr,unordered_map<int,list<int>>&adj){
+
+visited[node] = true;
+dfstr[node] = true;
+
+for(auto j:adj[node]){
+  if(!visited[j]){
+bool x = dfscycle(j,visited,dfstr,adj);
+if(x ==true){
+  return true;
+}
+  }
+
+  else if (visited[j] && dfstr[j]==1){
+return true;
+  }
+
+}
+dfstr[node]=false;
+return false;
+}
+
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+  // Write your code here.
+  unordered_map<int,list<int>>adj;
+unordered_map<int,bool>visited;
+unordered_map<int,bool>dfstr;
+  for(int i=0;i<edges.size();i++){
+    int u = edges[i].first;
+    int v = edges[i].second;
+
+    adj[u].push_back(v);
+    
+  }
+
+
+  for(int i =0;i<n;i++){
+    if(!visited[i]){
+      bool x = dfscycle(i,visited,dfstr,adj);
+    if(x==true){
+      return true;
+    }
+    }
+  }
+
+  return false;
+}
+
+
+
+Here are **short revision notes** based on **your code**.
+
+---
+
+# DFS Cycle Detection in Directed Graph (My Code)
+
+### 1. Data Structures
+
+```cpp
+unordered_map<int, list<int>> adj;
+```
+
+* Stores adjacency list.
+* Since the graph is **directed**, add only:
+
+```cpp
+adj[u].push_back(v);
+```
+
+---
+
+```cpp
+unordered_map<int,bool> visited;
+```
+
+* Keeps track of nodes that have been visited at least once.
+
+---
+
+```cpp
+unordered_map<int,bool> dfstr;
+```
+
+* DFS Recursion Stack.
+* `true` → node is in the current DFS path.
+* `false` → node has finished processing.
+
+---
+
+# DFS Function
+
+### Entering a node
+
+```cpp
+visited[node] = true;
+dfstr[node] = true;
+```
+
+Meaning:
+
+* Mark node as visited.
+* Put it into the current recursion stack.
+
+---
+
+### Case 1 : Neighbour not visited
+
+```cpp
+if(!visited[j])
+{
+    bool x = dfscycle(j, visited, dfstr, adj);
+
+    if(x)
+        return true;
+}
+```
+
+Go deeper using DFS.
+
+If the recursive call finds a cycle, immediately return `true`.
+
+---
+
+### Case 2 : Neighbour already visited
+
+```cpp
+else if(visited[j] && dfstr[j])
+{
+    return true;
+}
+```
+
+If the neighbour is
+
+* already visited **and**
+* still present in the current DFS recursion stack,
+
+➡️ **Back Edge Found** → **Cycle Exists**.
+
+---
+
+### Leaving a node
+
+```cpp
+dfstr[node] = false;
+```
+
+Remove the node from the recursion stack because its DFS is complete.
+
+---
+
+### No cycle found
+
+```cpp
+return false;
+```
+
+---
+
+# Building the Graph
+
+```cpp
+for(...)
+{
+    adj[u].push_back(v);
+}
+```
+
+Only one direction because it is a **Directed Graph**.
+
+---
+
+# Handling Disconnected Graphs
+
+```cpp
+for(int i = 0; i < n; i++)
+{
+    if(!visited[i])
+    {
+        if(dfscycle(i, visited, dfstr, adj))
+            return true;
+    }
+}
+```
+
+Run DFS from every unvisited node because the graph may have multiple disconnected components.
+
+---
+
+# Time Complexity
+
+```
+O(V + E)
+```
+
+Each vertex and edge is visited once.
+
+---
+
+# Space Complexity
+
+```
+O(V)
+```
+
+* `visited`
+* `dfstr`
+* DFS recursion stack
+
+---
+
+## ⭐ Easy Memory Trick
+
+* **visited** → "Have I ever visited this node?"
+* **dfstr** → "Is this node in my current DFS path?"
+* **visited && dfstr == true** → **Back Edge → Cycle**
+* Before returning from DFS → `dfstr[node] = false` (remove from current path).
