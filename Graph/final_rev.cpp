@@ -156,6 +156,54 @@ return false;
 
 
 /// CYCLE DETECTION IN DIRECTED GRAPH BY DFS ...
+#include<bits//stdc++.h>
+bool dfs(int node,unordered_map<int,bool>&visited,unordered_map<int,bool>&dfstr,unordered_map<int,list<int>>&adj){
+visited[node] =1;
+dfstr[node]=1;
+
+for(auto i:adj[node]){
+  if(!visited[i]){
+  bool x = dfs(i,visited,dfstr,adj);
+  if(x==true){
+    return true;
+  }
+  }
+else if(dfstr[i] ==1){
+  return true;
+}
+
+}
+dfstr[node] = 0;
+return false;
+}
+
+
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+  // Write your code here.
+  unordered_map<int,list<int>>adj;
+unordered_map<int,bool>visited;
+unordered_map<int,bool>dfstr;
+  for(int i=0;i<edges.size();i++){
+    int u = edges[i].first;
+    int v = edges[i].second;
+
+    adj[u].push_back(v);
+    
+  }
+
+
+  for(int i =0;i<n;i++){
+    if(!visited[i]){
+      bool x = dfs(i,visited,dfstr,adj);
+    if(x==true){
+      return true;
+    }
+    }
+  }
+
+  return false;
+}
+
 
 
 /// TOPOLOGICAL SORT BY DFS ..
