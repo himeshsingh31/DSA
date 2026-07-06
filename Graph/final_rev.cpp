@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include<bits//stdc++.h>
 using namespace std;
 
 /// BFS TRAVERSAL for graph
@@ -74,6 +74,8 @@ vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>>& edges) {
     return ans2;
 }
 
+
+
 /// CYCLE DETECTION IN UNDIRECTED GRAPH BY BFS ...
 
 bool bfs(int node, vector<int>& parent, unordered_map<int, list<int>>& adj, vector<bool>& visited) {
@@ -129,7 +131,28 @@ string cycleDetection(vector<vector<int>>& edges, int n, int m) {
     return "No";
 }
 
+
+
 /// CYCLE DETECTION IN UNDIRECTED GRAPH BY DFS ...
+
+bool dfs(int node,int paren,vector<int>&parent,unordered_map<int,list<int>>&adj,vector<bool>&visited){
+visited[node] = true;
+parent[node] = paren;
+for(auto i:adj[node]){
+    if(!visited[i]){
+        bool x =dfs(i,node,parent,adj,visited);
+    if(x == true){
+return true;
+    }
+    }
+    else if(visited[i] && parent[node]!= i){
+        return true;
+    }
+}
+return false;
+}
+
+
 
 
 /// CYCLE DETECTION IN DIRECTED GRAPH BY DFS ...
@@ -139,3 +162,7 @@ string cycleDetection(vector<vector<int>>& edges, int n, int m) {
 
 
 /// TOPOLOGICAL SORT BY BFS (KAHN'S ALGORITHM)
+
+
+
+///CYCLE DETECTION IN DIRECTED GRAPH BY BFS (KAHN'S ALGORITHM)
