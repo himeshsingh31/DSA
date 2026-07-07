@@ -1,22 +1,26 @@
-#include<bits//stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 /// BFS TRAVERSAL for graph
 
-void bfs(vector<int>& ans, unordered_map<int, bool>& visited, int node, vector<vector<int>> adj2) {
+void bfs(vector<int> &ans, unordered_map<int, bool> &visited, int node, vector<vector<int>> adj2)
+{
 
     queue<int> q;
     q.push(node);
     visited[node] = 1;
 
-    while (!q.empty()) {
+    while (!q.empty())
+    {
 
         int x = q.front();
         q.pop();
         ans.push_back(x);
 
-        for (auto i : adj2[x]) {
-            if (!visited[i]) {
+        for (auto i : adj2[x])
+        {
+            if (!visited[i])
+            {
                 q.push(i);
                 visited[i] = 1;
             }
@@ -24,7 +28,8 @@ void bfs(vector<int>& ans, unordered_map<int, bool>& visited, int node, vector<v
     }
 }
 
-vector<int> bfsTraversal(int n, vector<vector<int>>& adj) {
+vector<int> bfsTraversal(int n, vector<vector<int>> &adj)
+{
     // Write your code here.
     int m = adj.size();
     unordered_map<int, list<int>> adj2;
@@ -38,24 +43,29 @@ vector<int> bfsTraversal(int n, vector<vector<int>>& adj) {
 
 /// DFS TRAVERSAL FOR GRAPH ...
 
-void dfs(int node, vector<bool>& visited, unordered_map<int, list<int>>& adj, vector<int>& ans) {
+void dfs(int node, vector<bool> &visited, unordered_map<int, list<int>> &adj, vector<int> &ans)
+{
     visited[node] = true;
     ans.push_back(node);
 
-    for (auto i : adj[node]) {
-        if (!visited[i]) {
+    for (auto i : adj[node])
+    {
+        if (!visited[i])
+        {
             dfs(i, visited, adj, ans);
         }
     }
 }
 
-vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>>& edges) {
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
     // Write your code here
     unordered_map<int, list<int>> adj;
     vector<vector<int>> ans2;
     vector<bool> visited(V, false);
 
-    for (int i = 0; i < E; i++) {
+    for (int i = 0; i < E; i++)
+    {
         int u = edges[i][0];
         int v = edges[i][1];
 
@@ -63,8 +73,10 @@ vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>>& edges) {
         adj[v].push_back(u);
     }
 
-    for (int i = 0; i < V; i++) {
-        if (!visited[i]) {
+    for (int i = 0; i < V; i++)
+    {
+        if (!visited[i])
+        {
             vector<int> ans;
             dfs(i, visited, adj, ans);
             ans2.push_back(ans);
@@ -74,27 +86,30 @@ vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>>& edges) {
     return ans2;
 }
 
-
-
 /// CYCLE DETECTION IN UNDIRECTED GRAPH BY BFS ...
 
-bool bfs(int node, vector<int>& parent, unordered_map<int, list<int>>& adj, vector<bool>& visited) {
+bool bfs(int node, vector<int> &parent, unordered_map<int, list<int>> &adj, vector<bool> &visited)
+{
     visited[node] = true;
     queue<int> q;
     q.push(node);
 
-    while (!q.empty()) {
+    while (!q.empty())
+    {
         int node = q.front();
         q.pop();
 
-        for (auto i : adj[node]) {
-            if (!visited[i]) {
+        for (auto i : adj[node])
+        {
+            if (!visited[i])
+            {
                 q.push(i);
                 visited[i] = 1;
                 parent[i] = node;
             }
 
-            else if (visited[i] && parent[node] != i) {
+            else if (visited[i] && parent[node] != i)
+            {
                 return true;
             }
         }
@@ -103,11 +118,13 @@ bool bfs(int node, vector<int>& parent, unordered_map<int, list<int>>& adj, vect
     return false;
 }
 
-string cycleDetection(vector<vector<int>>& edges, int n, int m) {
+string cycleDetection(vector<vector<int>> &edges, int n, int m)
+{
     // Write your code here.
     unordered_map<int, list<int>> adj;
 
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i < m; i++)
+    {
         int u = edges[i][0];
         int v = edges[i][1];
 
@@ -118,11 +135,14 @@ string cycleDetection(vector<vector<int>>& edges, int n, int m) {
     vector<int> parent(n + 1, -1);
     vector<bool> visited(n + 1, false);
 
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i]) {
+    for (int i = 1; i <= n; i++)
+    {
+        if (!visited[i])
+        {
             bool x = bfs(i, parent, adj, visited);
 
-            if (x == true) {
+            if (x == true)
+            {
                 return "Yes";
             }
         }
@@ -131,160 +151,217 @@ string cycleDetection(vector<vector<int>>& edges, int n, int m) {
     return "No";
 }
 
-
-
 /// CYCLE DETECTION IN UNDIRECTED GRAPH BY DFS ...
 
-bool dfs(int node,int paren,vector<int>&parent,unordered_map<int,list<int>>&adj,vector<bool>&visited){
-visited[node] = true;
-parent[node] = paren;
-for(auto i:adj[node]){
-    if(!visited[i]){
-        bool x =dfs(i,node,parent,adj,visited);
-    if(x == true){
-return true;
+bool dfs(int node, int paren, vector<int> &parent, unordered_map<int, list<int>> &adj, vector<bool> &visited)
+{
+    visited[node] = true;
+    parent[node] = paren;
+    for (auto i : adj[node])
+    {
+        if (!visited[i])
+        {
+            bool x = dfs(i, node, parent, adj, visited);
+            if (x == true)
+            {
+                return true;
+            }
+        }
+        else if (visited[i] && parent[node] != i)
+        {
+            return true;
+        }
     }
-    }
-    else if(visited[i] && parent[node]!= i){
-        return true;
-    }
+    return false;
 }
-return false;
-}
-
-
-
 
 /// CYCLE DETECTION IN DIRECTED GRAPH BY DFS ...
-#include<bits//stdc++.h>
-bool dfs(int node,unordered_map<int,bool>&visited,unordered_map<int,bool>&dfstr,unordered_map<int,list<int>>&adj){
-visited[node] =1;
-dfstr[node]=1;
+#include <bits //stdc++.h>
+bool dfs(int node, unordered_map<int, bool> &visited, unordered_map<int, bool> &dfstr, unordered_map<int, list<int>> &adj)
+{
+    visited[node] = 1;
+    dfstr[node] = 1;
 
-for(auto i:adj[node]){
-  if(!visited[i]){
-  bool x = dfs(i,visited,dfstr,adj);
-  if(x==true){
-    return true;
-  }
-  }
-else if(dfstr[i] ==1){
-  return true;
-}
-
-}
-dfstr[node] = 0;
-return false;
-}
-
-
-int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
-  // Write your code here.
-  unordered_map<int,list<int>>adj;
-unordered_map<int,bool>visited;
-unordered_map<int,bool>dfstr;
-  for(int i=0;i<edges.size();i++){
-    int u = edges[i].first;
-    int v = edges[i].second;
-
-    adj[u].push_back(v);
-    
-  }
-
-
-  for(int i =0;i<n;i++){
-    if(!visited[i]){
-      bool x = dfs(i,visited,dfstr,adj);
-    if(x==true){
-      return true;
+    for (auto i : adj[node])
+    {
+        if (!visited[i])
+        {
+            bool x = dfs(i, visited, dfstr, adj);
+            if (x == true)
+            {
+                return true;
+            }
+        }
+        else if (dfstr[i] == 1)
+        {
+            return true;
+        }
     }
-    }
-  }
-
-  return false;
+    dfstr[node] = 0;
+    return false;
 }
 
+int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
+{
+    // Write your code here.
+    unordered_map<int, list<int>> adj;
+    unordered_map<int, bool> visited;
+    unordered_map<int, bool> dfstr;
+    for (int i = 0; i < edges.size(); i++)
+    {
+        int u = edges[i].first;
+        int v = edges[i].second;
 
+        adj[u].push_back(v);
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!visited[i])
+        {
+            bool x = dfs(i, visited, dfstr, adj);
+            if (x == true)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
 
 /// TOPOLOGICAL SORT BY DFS ..
 
-void dfs(int node,vector<bool>&visited,stack<int>&s,unordered_map<int,list<int>>&adj){
-visited[node] = true;
+void dfs(int node, vector<bool> &visited, stack<int> &s, unordered_map<int, list<int>> &adj)
+{
+    visited[node] = true;
 
-for(auto i:adj[node]){
-    if(!visited[i]){
-        dfs(i,visited,s,adj);
+    for (auto i : adj[node])
+    {
+        if (!visited[i])
+        {
+            dfs(i, visited, s, adj);
+        }
     }
+
+    s.push(node);
 }
 
-s.push(node);
-
-
-}
-
-vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)
+{
     // Write your code here
-unordered_map<int,list<int>>adj;
-vector<bool>visited(v,false);
-for(int i=0;i<e;i++){
-    int u = edges[i][0];
-    int v = edges[i][1];
+    unordered_map<int, list<int>> adj;
+    vector<bool> visited(v, false);
+    for (int i = 0; i < e; i++)
+    {
+        int u = edges[i][0];
+        int v = edges[i][1];
 
-    adj[u].push_back(v);
-}
-stack<int>s;
-for(int i=0;i<v;i++){
-    if(!visited[i]){
-        dfs(i,visited,s,adj);
+        adj[u].push_back(v);
     }
+    stack<int> s;
+    for (int i = 0; i < v; i++)
+    {
+        if (!visited[i])
+        {
+            dfs(i, visited, s, adj);
+        }
+    }
+    vector<int> ans;
+    while (!s.empty())
+    {
+        ans.push_back(s.top());
+        s.pop();
+    }
+    return ans;
 }
-vector<int>ans;
-while(!s.empty()){
-ans.push_back(s.top());
-s.pop();
-}
-return ans;
-}
-
 
 /// TOPOLOGICAL SORT BY BFS (KAHN'S ALGORITHM)
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
 
-vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)
+{
     // Write your code here
-unordered_map<int,list<int>>adj;
-vector<int>indegree(v,0);
+    unordered_map<int, list<int>> adj;
+    vector<int> indegree(v, 0);
 
-for(int i=0;i<e;i++){
-    int u = edges[i][0];
-    int v = edges[i][1];
+    for (int i = 0; i < e; i++)
+    {
+        int u = edges[i][0];
+        int v = edges[i][1];
 
-    adj[u].push_back(v);
-indegree[v]++;
-
-}
-queue<int>q;
-
-for(int i =0;i<v;i++){
-    if(indegree[i]==0){
-        q.push(i);
+        adj[u].push_back(v);
+        indegree[v]++;
     }
-}
-vector<int>ans;
-while(!q.empty()){
-    int x = q.front();
-    q.pop();
-    ans.push_back(x);
-    for(auto i:adj[x]){
-indegree[i]--;
-if(indegree[i]==0)
-q.push(i);
+    queue<int> q;
+
+    for (int i = 0; i < v; i++)
+    {
+        if (indegree[i] == 0)
+        {
+            q.push(i);
+        }
     }
+    vector<int> ans;
+    while (!q.empty())
+    {
+        int x = q.front();
+        q.pop();
+        ans.push_back(x);
+        for (auto i : adj[x])
+        {
+            indegree[i]--;
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+    }
+
+    return ans;
 }
 
+/// CYCLE DETECTION IN DIRECTED GRAPH BY BFS (KAHN'S ALGORITHM)
+#include <bits/stdc++.h>
+int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
+{
+    // Write your code here.
+    unordered_map<int, list<int>> adj;
+    vector<int> indegree(n + 1, 0);
+    vector<int> ans;
+    for (int i = 0; i < edges.size(); i++)
+    {
+        int u = edges[i].first;
+        int v = edges[i].second;
 
-return ans;
+        adj[u].push_back(v);
+        indegree[v]++;
+    }
+
+    queue<int> q;
+
+    for (int i = 1; i <= n; i++)
+    {
+        if (indegree[i] == 0)
+        {
+            q.push(i);
+        }
+    }
+    while (!q.empty())
+    {
+        int x = q.front();
+        q.pop();
+        ans.push_back(x);
+        for (auto i : adj[x])
+        {
+            indegree[i]--;
+            if (indegree[i] == 0)
+                q.push(i);
+        }
+    }
+
+    int count = ans.size();
+
+    if (count == n)
+        return false;
+
+    return true;
 }
-
-
-///CYCLE DETECTION IN DIRECTED GRAPH BY BFS (KAHN'S ALGORITHM)
