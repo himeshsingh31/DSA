@@ -30,7 +30,7 @@ void bfs(vector<int> &ans, unordered_map<int, bool> &visited, int node, vector<v
 
 vector<int> bfsTraversal(int n, vector<vector<int>> &adj)
 {
-    // Write your code here.
+    // Write your code here
     int m = adj.size();
     unordered_map<int, list<int>> adj2;
     unordered_map<int, bool> visited;
