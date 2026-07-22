@@ -1,3 +1,5 @@
+///adj list finder
+
 #include<iostream>
 #include<map>
 #include<list>

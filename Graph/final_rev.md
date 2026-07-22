@@ -368,3 +368,127 @@ int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
 
     return true;
 }
+
+
+
+///// shortest path in the DIRECTED ACYCLIC WEIGHTED GRAPH USING DFS..
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class graph
+{
+public:
+    unordered_map<int, list<pair<int, int>>> adj;
+
+    void edges(int u, int v, int w)
+    {
+        pair<int, int> x = make_pair(v, w);
+        adj[u].push_back(x);
+    }
+
+    void printer()
+    {
+        for (auto i : adj)
+        {
+            cout << i.first << "-->";
+            for (auto j : i.second)
+            {
+                cout << "(" << j.first << "," << j.second << ")";
+            }
+            cout << endl;
+        }
+    }
+
+    // create a topological sort first...
+    void dfs(unordered_map<int, bool> &visited, int x, stack<int> &s)
+    {
+        visited[x] = 1;
+
+        for (auto i : adj[x])
+        {
+            if (visited[i.first] != 1)
+            {
+                dfs(visited, i.first, s);
+            }
+        }
+        s.push(x);
+    }
+
+    // DAG path finder
+
+    void dagfinder(int n, int src, stack<int> &s, vector<int> &dist)
+    {
+
+        dist[src] = 0;
+
+        while (!s.empty())
+        {
+            int top = s.top();
+            s.pop();
+
+            if (dist[top] != INT_MAX)
+            {
+                for (auto i : adj[top])
+                {
+                    if (dist[top] + i.second < dist[i.first])
+                    {
+                        dist[i.first] = dist[top] + i.second;
+                    }
+                }
+            }
+
+          
+        }
+    }
+};
+
+int main()
+{
+    graph g;
+
+    g.edges(0, 1, 5);
+    g.edges(0, 2, 3);
+    g.edges(1, 2, 2);
+    g.edges(1, 3, 6);
+    g.edges(2, 3, 7);
+    g.edges(2, 4, 4);
+    g.edges(2, 5, 2);
+    g.edges(3, 4, -1);
+    g.edges(4, 5, -2);
+
+    g.printer();
+    int n = 6;
+
+    unordered_map<int, bool> visited;
+    stack<int> s;
+    int src = 1;
+    for (int i = 0; i < n; i++)
+    {
+        if (visited[i] == 0)
+        {
+            g.dfs(visited, i, s);
+        }
+    }
+
+    vector<int> dist(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        dist[i] = INT_MAX;
+    }
+
+    g.dagfinder(n, src, s, dist);
+
+    for (int i = 0; i < n; i++)
+    {
+        if(dist[i] == INT_MAX){
+            cout<<"INF"<<"  ";
+        }
+        else 
+        cout << dist[i] << "  ";
+    }
+
+    return 0;
+}
