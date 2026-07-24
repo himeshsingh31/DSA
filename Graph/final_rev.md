@@ -1,7 +1,7 @@
+//// BFS TRAVERSAL for graph
+
 #include <bits/stdc++.h>
 using namespace std;
-
-/// BFS TRAVERSAL for graph
 
 void bfs(vector<int> &ans, unordered_map<int, bool> &visited, int node, vector<vector<int>> adj2)
 {
@@ -39,7 +39,12 @@ vector<int> bfsTraversal(int n, vector<vector<int>> &adj)
     bfs(ans, visited, 0, adj);
 
     return ans;
-}
+}//////
+
+
+
+
+
 
 /// DFS TRAVERSAL FOR GRAPH ...
 
@@ -84,7 +89,12 @@ vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
     }
 
     return ans2;
-}
+}//////
+
+
+
+
+
 
 /// CYCLE DETECTION IN UNDIRECTED GRAPH BY BFS ...
 
@@ -149,7 +159,13 @@ string cycleDetection(vector<vector<int>> &edges, int n, int m)
     }
 
     return "No";
-}
+}///////////
+
+
+
+
+
+
 
 /// CYCLE DETECTION IN UNDIRECTED GRAPH BY DFS ...
 
@@ -173,7 +189,14 @@ bool dfs(int node, int paren, vector<int> &parent, unordered_map<int, list<int>>
         }
     }
     return false;
-}
+}///////////////
+
+
+
+
+
+
+
 
 /// CYCLE DETECTION IN DIRECTED GRAPH BY DFS ...
 #include <bits //stdc++.h>
@@ -228,7 +251,15 @@ int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
     }
 
     return false;
-}
+}////////////////
+
+
+
+
+
+
+
+
 
 /// TOPOLOGICAL SORT BY DFS ..
 
@@ -274,7 +305,13 @@ vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)
         s.pop();
     }
     return ans;
-}
+}//////
+
+
+
+
+
+
 
 /// TOPOLOGICAL SORT BY BFS (KAHN'S ALGORITHM)
 #include <bits/stdc++.h>
@@ -317,7 +354,9 @@ vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)
     }
 
     return ans;
-}
+}/////////
+
+
 
 
 
@@ -378,7 +417,7 @@ int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
 
 
 
-///// shortest path in the DIRECTED ACYCLIC WEIGHTED GRAPH USING DFS..
+/////***shortest path in the DIRECTED ACYCLIC WEIGHTED GRAPH USING DFS*****
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -497,58 +536,125 @@ int main()
     }
 
     return 0;
-}///
+}/////
 
 
 
-/////*************THE DIJKISTRA'S ALGORITHM..
 
-#include <bits/stdc++.h> 
-#include<set>
-vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source) {
+
+
+
+/////*****THE DIJKISTRA'S ALGORITHM******
+
+#include <bits/stdc++.h>
+vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source)
+{
     // Write your code here.
 
-unordered_map<int,list<pair<int,int>>>adj;
+    unordered_map<int, list<pair<int, int>>> adj;
 
-for(int i=0;i<edges;i++){
-    int u = vec[i][0];
-    int v = vec[i][1];
-    int w = vec[i][2];
-    adj[u].push_back(make_pair(v,w));
-    adj[v].push_back(make_pair(u,w));
-}
+    for (int i = 0; i < edges; i++)
+    {
+        int u = vec[i][0];
+        int v = vec[i][1];
+        int w = vec[i][2];
+        adj[u].push_back(make_pair(v, w));
+        adj[v].push_back(make_pair(u, w));
+    }
 
+    set<pair<int, int>> s;
 
-set <pair<int,int>>s;
+    vector<int> dist(vertices, INT_MAX);
 
-vector<int>dist(vertices,INT_MAX);
+    dist[source] = 0;
+    s.insert(make_pair(0, source));
 
-dist[source] = 0;
-s.insert(make_pair(0,source));
+    while (!s.empty())
+    {
+        pair<int, int> top = *(s.begin());
+        s.erase(top);
+        int node_distance = top.first;
+        int top_node = top.second;
 
-while(!s.empty())
-{
-    pair<int,int> top = *(s.begin());
-s.erase(top);
-    int node_distance = top.first;
-    int top_node = top.second;
+        for (auto i : adj[top_node])
+        {
+            if (node_distance + i.second < dist[i.first])
+            {
+                auto checker = s.find(make_pair(i.second, i.first));
+                if (checker != s.end())
+                {
+                    s.erase(checker);
+                }
 
-    for(auto  i: adj[top_node]){
-        if(node_distance+i.second<dist[i.first]){
-          auto checker =s.find(make_pair(i.second,i.first));
-          if(checker!= s.end()){
-              s.erase(checker);
-          }
-
-          dist[i.first] = node_distance+i.second;
-          s.insert(make_pair(dist[i.first],i.first));
+                dist[i.first] = node_distance + i.second;
+                s.insert(make_pair(dist[i.first], i.first));
+            }
         }
     }
 
+    return dist;
+}//////////
 
+
+
+
+//////*******PRIMS ALGORITHM***
+#include <bits/stdc++.h>
+vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
+{
+    // Write your code here
+
+    vector<int> key(n + 1, INT_MAX);
+    vector<bool> visited(n + 1, false);
+    vector<int> parent(n + 1, -1);
+
+    unordered_map<int, list<pair<int, int>>> adj;
+
+    for (int i = 0; i < m; i++)
+    {
+        int u = g[i].first.first;
+        int v = g[i].first.second;
+        int dis = g[i].second;
+
+        adj[u].push_back({v, dis});
+        adj[v].push_back({u, dis});
+    }
+
+    key[1] = 0;
+    parent[1] = -1;
+
+    for (int i = 1; i < n; i++)
+    {
+        int u;
+        int mini = INT_MAX;
+        for (int j = 1; j <= n; j++)
+        {
+            if (visited[j] == false && key[j] < mini)
+            {
+                u = j;
+                mini = key[j];
+            }
+        }
+
+        visited[u] = true;
+
+        for (auto k : adj[u])
+        {
+            if (visited[k.first] == false && k.second < key[k.first])
+            {
+                parent[k.first] = u;
+                key[k.first] = k.second;
+            }
+        }
+    }
+
+    vector<pair<pair<int, int>, int>> ans;
+
+    for (int i = 2; i < parent.size(); i++)
+        ans.push_back({{parent[i], i}, key[i]});
+
+    return ans;
 }
 
-return dist;
 
-}
 

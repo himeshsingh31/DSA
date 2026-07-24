@@ -1,4 +1,3 @@
-///adj list finder
 
 #include<iostream>
 #include<map>
@@ -31,7 +30,6 @@ cout<<endl;
 int main(){
 int u;
 int v ;
-
 
 cout<<"enter the number of edges you want to see"<<endl;
 int edges;
