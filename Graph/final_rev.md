@@ -412,6 +412,67 @@ int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges)
 
 
 /// shortest path finder in the unweighted undirectional graph.. 
+https://www.geeksforgeeks.org/problems/shortest-path-in-undirected-graph-having-unit-distance/1
+class Solution
+{
+public:
+    int shortestPath(int V, vector<vector<int>> &edges, int src, int dest)
+    {
+        // code here
+        vector<bool> visited(V, false);
+        vector<int> parent(V, -1);
+        queue<int> q;
+        q.push(src);
+
+        unordered_map<int, list<int>> adj;
+
+        for (int i = 0; i < edges.size(); i++)
+        {
+            int x = edges[i][0];
+            int y = edges[i][1];
+
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+
+        visited[src] = 1;
+        while (!q.empty())
+        {
+            int x = q.front();
+            q.pop();
+
+            for (auto i : adj[x])
+                if (visited[i] == 0)
+                {
+                    q.push(i);
+                    parent[i] = x;
+                    visited[i] = true;
+                }
+        }
+
+        vector<int> ans;
+
+        int des = dest;
+
+        while (des != src)
+        {
+            if (des == -1)
+            {
+                return -1;
+            }
+            else
+            {
+                ans.push_back(des);
+                des = parent[des];
+            }
+        }
+
+        ans.push_back(src);
+
+        int p = ans.size() - 1;
+        return p;
+    }
+};
 
 
 
