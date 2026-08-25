@@ -1,6 +1,8 @@
-lst = [1,2,3,8,1,0,2]
+import array 
+import numpy as np
+import datetime as d
+import time as t
+import sys
 
-c = set(lst)
-print(c)
-x = list(c)
-print(x[0])
+
+
